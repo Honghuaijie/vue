@@ -27,7 +27,6 @@
 
         .list1 li {
             height: 100px;
-
         }
     </style>
 </head>
@@ -60,9 +59,9 @@
             <button @click="show(2)">点我触发事件2</button>
         </div>
 
-        <!-- 5.self：只有event.target是当前操作的元素时才触发事件 -->
+        <!-- 5.self：只有event.target是当前操作的元素时才触发事件 ,可以阻止事件冒泡-->
         <div class="demo1" @click.self="showInfo1">
-            <button @click="showInfo1">点我触发事件2</button>
+            <button @click="showInfo1">点我触发事件3</button>
         </div>
 
         <!-- 6.passive：事件的默认行为立即执行，无需等待事件回调执行完毕 -->

@@ -22,16 +22,18 @@
             2、vm身上所有的属性及Vue原型上所有属性，在Vue模板中都可以直接使用
      -->
 
-    <!-- 准备好一个容器 -->
+    <!-- 准备好一个容器 v -->
     <div id="root">
         <h1>学校名称:{{name}}</h1>
         <h1>学校地址:{{address}}</h1>
-        <h1>测试一下:{{$emit}}</h1>
+        <!-- <h1>测试一下:{{$root.slots}}</h1> -->
     </div>
 
     <script>
+        //vm
         const vm = new Vue({
             el: '#root',
+            //m
             data: {
                 name: "尚硅谷",
                 address: '北京'
