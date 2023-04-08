@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        1.Vue中常用的按键别名：
+            回车 -> enter
+            删除 -> delete (捕获"退格"和"删除")
+            退出 -> esc
+            空格 -> space
+            换行 -> tab（特殊，需要配合keyup使用）
+            上 -> up
+            下 -> down
+            左 -> left
+            右 -> right
+
+            按键分为普通键和系统修饰键(ctrl、alt、shift、tab、meta（win键）)
+            普通键可以用keyup和keydown
+            系统修饰键最好用keydown
+
+     -->
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h2>你好</h2>
+        <!-- keyup是键盘松开后执行，keudown是键盘按下后执行 -->
+        <input type="text" @keyup.huice="showInfo">
+        <!-- 系统组合键 -->
+        <input type="text" @keyup.ctrl.y="showInfo">
+    </div>
+
+    <script>
+        // 自定义别名按键
+        Vue.config.keyCodes.huice = 13
+        new Vue({
+            el: '#root',
+            data: {
+
+            },
+            methods: {
+                showInfo(e) {
+
+                    console.log(e.target.value);
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

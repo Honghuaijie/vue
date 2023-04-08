@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姓名案例_计算属性实现</title>
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        计算属性：
+            1.定义：要用的属性不存在，要通过已有属性计算得来。
+            2.原理：底层借助了Object.defineproperty方法提供的getter和setter。
+            3.get函数什么时候执行？
+                （1）.初次读取时会执行一次
+                （2）.当依赖的数据发生改变时会被再次调用。
+            4.优势：与methods相比，内部有缓存机制（复用），效率更高，调试方便。
+            5.备注：
+                1.计算属性最终会出现在vm上，直接读取使用即可。
+                2.如果计算属性要被修改，那必须写set函数去响应修改，且set中要引起计算时依赖的数据发生变化
+
+     -->
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        姓：<input v-model="left" type="text"><br>
+        名：<input v-model="right" type="text"><br>
+        名：<input v-model="x" type="text"><br>
+        <!-- 在读取第一个fullName时，Vue会做一个缓存，这样后面再调用fullName时，Vue就不用再调用get（）了 -->
+        全名：<span>{{fullName}}</span><br>
+        全名：<span>{{fullName}}</span><br>
+        全名：<span>{{fullName}}</span><br>
+        全名：<span>{{fullName}}</span><br>
+    </div>
+
+    <script>
+        //计算属性就是拿着已有的属性去计算和加工原来的属性得到一个新的属性
+
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                left: "张",
+                right: "三",
+                x: "11"
+            },
+            //computed用来存放被计算出来的属性
+            computed: {
+                fullName: {
+                    //get的作用：当有人读取fullName时，get就会被调用，且返回值就作为fullName的值
+                    //get什么时候被调用：1.当第一次被读取时。2.所依赖的属性的值发生变化
+                    get() {
+                        // console.log(this) //此处的this是vm
+                        console.log("get被调用了");
+                        return this.left + '-' + this.right   //如果left发生变化，那么get就会被重新调用
+                    },
+                    //set什么时候被调用？ 当fuillname被修改时
+                    set(value) {
+                        const arr = value.split("-")
+                        this.left = arr[0]  //因为left发生了变化，所以fullName的get方法需要重新执行
+                        this.right = arr[1]
+                    }
+                }
+            }
+
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>姓名案例_计算属性实现</title>
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        姓：<input v-model="left" type="text"><br>
+        名：<input v-model="right" type="text"><br>
+        <!-- 在读取第一个fullName时，Vue会做一个缓存，这样后面再调用fullName时，Vue就不用再调用get（）了 -->
+        全名：<span>{{fullName}}</span><br>
+
+    </div>
+
+    <script>
+        //计算属性就是拿着已有的属性去计算和加工原来的属性得到一个新的属性
+        //计算属性不能开启异步任务去维护数据
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                left: "张",
+                right: "三",
+                fullName: '张-三'
+            },
+            watch: {
+
+                left(newValue) {
+                    setTimeout(() => {   //这里必须写成箭头函数，因为箭头函数没有自己的this，那么它就需要往外找，就找到了left
+                        console.log(this);
+                        this.fullName = newValue + '-' + this.right
+
+                    }, 1000);
+                },
+                right(newValue) {
+                    this.fullName = this.left + '-' + newValue
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

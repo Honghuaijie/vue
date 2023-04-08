@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表过滤</title>
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+    <!-- 准备好一个容器 -->
+    <div id="root">
+
+        <h2>人员列表</h2>
+        <!-- 1.收集用户的输入 -->
+        <input type="text" placeholder="请输入名字" v-model="keyWord">
+        <ul>
+            <li v-for="(p,index) in filPersons" :key="p.id">
+                {{p.name}} --{{p.age}}--{{p.sex}}
+            </li>
+        </ul>
+
+
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                persons: [
+                    { id: '001', name: '马冬梅', age: 19, sex: '女' },
+                    { id: '002', name: '周冬雨', age: 20, sex: '女' },
+                    { id: '003', name: '周杰伦', age: 21, sex: '男' },
+                    { id: '004', name: '温兆伦', age: 22, sex: '男' }
+                ],
+                keyWord: '',
+
+            },
+            //#region 
+            //使用watch实现
+            // watch: {
+            //     //基础
+            //     // 'abc'.indexOf(a) 如果返回的是-1表示没找到，如果找到了就返回对应字符的下标
+            //     // filter用来从数组中筛选出一些特定的元素  在改方法中需要有一个回调函数（也可以是箭头函数），返回为true则该元素将包含在新的数组中，否则不会。
+            //     keyWord: {
+            //         immediate: true, //表示初始化时，立即执行
+            //         handler(val) {
+            //             this.filPersons = this.persons.filter((p) => {  ///p表示当前正在处理的元素
+            //                 return p.name.indexOf(val) !== -1    //返回为true则该元素p将包含在新的数组中，否则不会
+            //             }
+            //             )
+            //         }
+            //     }
+            // }
+            //#endregion
+
+
+            //使用computed实现：当computed和watch 都能实现时，我们优先使用computed
+            computed: {
+                filPersons() {
+                    // //如果这里使用回调函数，那么this就会默认指向windows
+                    const vm = this
+                    return this.persons.filter(function (p) {        ///p表示当前正在处理的元素
+                        return p.name.indexOf(vm.keyWord) !== -1    //返回为true则该元素p将包含在新的数组中，否则不会
+                    })
+                    //因为箭头函数没有自己的this，所以只能继承外部作用域的this
+                    // return this.persons.filter((p) => {        ///p表示当前正在处理的元素
+                    //     console.log(this);
+                    //     return p.name.indexOf(this.keyWord) !== -1    //返回为true则该元素p将包含在新的数组中，否则不会
+                    // })
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
