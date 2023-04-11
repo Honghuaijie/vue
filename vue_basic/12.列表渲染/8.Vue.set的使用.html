@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h2>学校名称:{{name}}</h2>
+        <h2>学校地址:{{address}}</h2>
+        <hr>
+        <h2>学生信息</h2>
+        <button @click="addSex">点我添加性别</button>
+        <h2>姓名{{student.name}}</h2>
+        <h2>年龄{{student.age.rAge}}</h2>
+        <h2 v-if="student.sex">性别{{student.sex}}</h2>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                name: "南科院",
+                address: "北京",
+                student: {
+                    name: 'tom',
+                    age: {
+                        rAge: 40,
+                        sAge: 19
+                    },
+                    friends: [
+                        { name: 'jerry', age: 20 },
+                        'hhj'
+                    ]
+                }
+            },
+            methods: {  //methods里面的方法正常写，this就是vm
+                addSex() {
+                    //set只能给data中的对象添加属性，不能给data添加属性
+                    this.$set(this.student, 'sex', '男')
+                }
+            },
+        })
+    </script>
+</body>
+
+</html>

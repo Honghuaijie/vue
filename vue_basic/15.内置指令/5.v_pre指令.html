@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 
+        v-pre指令
+            1.表示当前节点不需要编译
+            2.加快编译速度
+            可以用在不使用指令语法，插值语法的节点
+     -->
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h2 v-pre>你好</h2>
+        <h2 v-pre>当前n的值{{n}}</h2>
+        <button v-pre @click="n++">点我n+1</button>
+        <select name="" id="s">
+            <option value="zhangsan">张三</option>
+            <option value="zhangsan">李四</option>
+            <option value="zhangsan">张三</option>
+            <option value="zhangsan">张三</option>
+        </select>
+    </div>
+
+    <script>
+        new Vue({
+            el: '#root',
+            data: {
+                n: 1
+            }
+        })
+    </script>
+</body>
+
+</html>

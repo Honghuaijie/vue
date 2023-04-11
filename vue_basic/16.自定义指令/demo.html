@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="demo">点我添加一个input</button>
+
+    <script>
+        const demo = document.getElementById('demo')
+        const input = document.createElement("input")
+        demo.onclick = () => {
+            //一些需要在标签生成后才能进行的操作，在标签进行前定义，是无效的
+            input.value = 4
+            // input.focus()  // 无效 
+            // input.parentElement.style.backgroundColor = "skyblue"  /因为input还没插入页面，是无法找到父元素的
+
+            document.body.appendChild(input)
+            input.focus()
+            // input.parentElement.style.backgroundColor = "skyblue"
+        }
+
+    </script>
+</body>
+
+</html>

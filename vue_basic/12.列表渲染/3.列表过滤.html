@@ -62,8 +62,8 @@
             //使用computed实现：当computed和watch 都能实现时，我们优先使用computed
             computed: {
                 filPersons() {
-                    // //如果这里使用回调函数，那么this就会默认指向windows
                     const vm = this
+                    // //如果这里使用回调函数，那么this就会默认指向windows
                     return this.persons.filter(function (p) {        ///p表示当前正在处理的元素
                         return p.name.indexOf(vm.keyWord) !== -1    //返回为true则该元素p将包含在新的数组中，否则不会
                     })

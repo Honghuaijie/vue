@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表过滤</title>
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+
+    <!-- 准备好一个容器 -->
+    <div id="root">
+
+        <h2>人员列表</h2>
+        <!-- 1.收集用户的输入 -->
+        <input type="text" placeholder="请输入名字" v-model="keyWord">
+        <button @click="sortType=2">年龄升序</button>
+        <button @click="sortType=1">年龄降序</button>
+        <button @click="sortType=0">原顺序</button>
+        <ul>
+            <li v-for="(p,index) in filPersons" :key="p.id">
+                {{p.name}} --{{p.age}}--{{p.sex}}
+            </li>
+        </ul>
+
+
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                persons: [
+                    { id: '001', name: '马冬梅', age: 19, sex: '女' },
+                    { id: '002', name: '周冬雨', age: 20, sex: '女' },
+                    { id: '003', name: '周杰伦', age: 21, sex: '男' },
+                    { id: '004', name: '温兆伦', age: 22, sex: '男' }
+                ],
+                keyWord: '',
+                sortType: 0  // 0表示原顺序，1表示降序，2表示升序
+
+            },
+
+            //基础解析：
+            // let arr =[5, 1, 9, 6, 2] 
+            // arr.sort((a, b) => {
+            //     return b - a;   //a-b为升序，b-a为降序
+            //     })
+            // console.log(arr);
+
+            //使用computed实现：当computed和watch 都能实现时，我们优先使用computed
+            computed: {
+                filPersons() {
+                    // 因为箭头函数没有自己的this，所以只能继承外部作用域的this
+                    const arr = this.persons.filter((p) => {        ///p表示当前正在处理的元素
+                        console.log(this);
+                        return p.name.indexOf(this.keyWord) !== -1    //返回为true则该元素p将包含在新的数组中，否则不会
+                    })
+                    arr.sort((p1, p2) => {
+                        return this.sortType === 1 ? p2.age - p1.age : p1.age - p2.age
+                    })
+                    return arr
+                }
+            }
+
+
+        })
+
+
+    </script>
+</body>
+
+</html>
