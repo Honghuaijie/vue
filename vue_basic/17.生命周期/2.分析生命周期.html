@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <h2>当前的n值是：{{n}}</h2>
+        <button @click="add">点我n+1</button>
+        <button @click="dtn">销毁VM</button>
+    </div>
+
+    <script>
+        const vm = new Vue({
+            el: '#root',
+            data: {
+                n: 1
+            },
+            methods: {
+                add() {
+                    this.n++
+                },
+                dtn() {
+                    console.log('destroy');
+                    this.$destroy()
+                }
+            },
+            watch: {
+                n() {
+                    console.log('n变了');
+                }
+            },
+            beforeCreate() {
+                console.log('beforeCreate');
+            },
+            created() {
+                console.log('create');
+            },
+            beforeMount() {
+                console.log('beforeMount');
+                document.querySelector('h2').innerText = 'hh'
+                console.log(this.$el);
+            },
+            mounted() {
+                console.log('mounted');
+                console.log(this.$el instanceof HTMLElement);
+            },
+            beforeUpdate() {
+                console.log('beforeUpdate');
+                console.log(this.n);
+            },
+            updated() {
+                console.log('updated');
+            },
+            beforeDestroy() {   //在此阶段，对数据的修改不会在更新了
+                console.log('beforeDestroy');
+                this.add()
+                console.log('add n=', this.n);
+            },
+            destroyed() {
+                console.log('destroyed');
+            },
+        })
+    </script>
+</body>
+
+</html>
