@@ -30,6 +30,7 @@
 
         <!-- 简写形式 -->
         单向数据绑定：<input type="text" :value="name">
+        单向数据绑定：<input type="text" :value="age">
         双向数据绑定：<input type="text" v-model="name">
     </div>
 
@@ -37,7 +38,8 @@
         new Vue({
             el: '#root',
             data: {
-                name: "尚硅谷11"
+                name: "尚硅谷11",
+                age: 18
             }
         })
     </script>

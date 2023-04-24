@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sessionStorage</title>
+</head>
+
+<body>
+    <!-- 
+        sessionStorage 浏览器关闭后,数据消失
+     -->
+    <h2>sessionStorage</h2>
+    <button onclick="saveData()">点我保存数据</button>
+    <button onclick="readData()">点我读取数据</button>
+    <button onclick="deleteData()">点我删除一个数据</button>
+    <button onclick="deleteAllData()">点我清空数据</button>
+
+    <script>
+        function saveData() {
+            window.sessionStorage.setItem('msg', '张三')
+            window.sessionStorage.setItem('msg2', 666)
+            const p = { name: '张三', age: 99 }
+            // setItem在保存数据时会默认执行tostring方法
+            window.sessionStorage.setItem('person', JSON.stringify(p))
+
+        }
+
+        function readData() {
+            console.log(sessionStorage.getItem('msg'));
+            console.log(sessionStorage.getItem('msg2'));
+            console.log(JSON.parse(sessionStorage.getItem('person')));
+        }
+
+        function deleteData() {
+            sessionStorage.removeItem('msg')
+        }
+
+        function deleteAllData() {
+            sessionStorage.clear()
+        }
+    </script>
+</body>
+
+</html>

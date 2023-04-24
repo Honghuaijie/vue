@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 引入Vue -->
+    <script src="../js/vue.js"></script>
+</head>
+
+<body>
+    <!--
+         VueComponent的原型对象的隐式原型属性指向的是Vue的原型对象
+         Vuecomponent.prototype.__proto__ == Vue.prototype
+         Vue原型上的属性，vc都可以用
+     -->
+    <!-- 准备好一个容器 -->
+    <div id="root">
+        <school></school>
+    </div>
+
+    <script>
+        Vue.prototype.x = 99
+        const school = Vue.extend({
+            template: `
+                <div>
+                    <h2>学校名称：{{schoolName}}</h2>
+                    <h2>学校地址：{{address}}</h2>
+                    <button @click="showInfo"> 点我输出x </button>
+                </div>
+            `,
+            data() {
+                return {
+                    schoolName: '张三',
+                    address: '南京'
+                }
+            },
+            methods: {
+                showInfo() {
+                    console.log(this.x)
+                }
+            }
+        })
+
+        const vm = new Vue({
+            el: '#root',
+            components: {
+                school
+            }
+        })
+    </script>
+</body>
+
+</html>
