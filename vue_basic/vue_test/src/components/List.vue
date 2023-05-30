@@ -1,76 +1,40 @@
 <template>
-  <div class="row">
-      <!-- 展示用户列表 -->
-      <div v-show="infos.items.length" class="card" v-for="item in infos.items" :key="item.id">
-        <!-- html_url是当前用户GitHub的主页地址 -->
-        <a :href="item.html_url" target="_blank">
-          <!-- avatar_url是用户头像 -->
-          <img :src="item.avatar_url" style='width: 100px'/>
-        </a>
-        <p class="card-text">{{ item.login }}</p>
-      </div>
-      <!-- 欢迎语 -->
-      <h1 v-show="infos.isFirst">欢迎使用</h1>
-      <!-- 加载中 -->
-      <h1 v-show="infos.isLoading">加载中</h1>
-      <!-- 错误提示 -->
-      <h1 v-show="infos.msg">{{ infos.msg }}</h1>
-
-      <!-- 没有数据 -->
-      <h1 v-show="infos.noData">没有数据</h1>
-
-
-</div>
+  <div>
+    <div v-for="item in studentList" :key="item.id">
+    <span>{{ item.name }}</span>
+    <button @click="removeStudent(item.id)">删除</button>
+    </div>
+  </div>
 </template>
 
 <script>
+// 验证Vue可以监听state传入的数据嘛
+import {mapState,mapMutations} from 'vuex'
 export default {
     name: 'List',
-    data() {
-        return {
-          infos: {
-            isFirst: true,
-            isLoading: false,
-            msg: '',
-            noData:false,
-            items: []    
-          }
+    computed: {
+        ...mapState(['studentList'])
+    },
+    methods: {
+        ...mapMutations({ setStudentList: 'SETSTUDENTLIST', removeStudent: 'REMOVESTUDENT'})
+    },
+    watch: {
+        // 验证从state中传入的数据，可不可以监听：答案是可以的
+        // 我监听studentList将新数据利用mutations进行修改
+        studentList: {
+            handler(value) {
+                console.log(value);
+                this.setStudentList(value)
+
+            }
         }
     },
     mounted() {
-        this.$bus.$on('updataListData',this.getUsers)
-    },
-    methods: {
-        getUsers(dataObj) {
-            this.infos = {...this.infos,...dataObj}   //将dataobj和info合并，如果属性相同，具体以dataobj为主
-        }
+        console.log(this);
     }
 }
 </script>
 
-<style scoped>
- .album {
-    min-height: 50rem; /* Can be removed; just added for demo purposes */
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    background-color: #f7f7f7;
-  }
+<style>
 
-  .card {
-    float: left;
-    width: 33.333%;
-    padding: .75rem;
-    margin-bottom: 2rem;
-    border: 1px solid #efefef;
-    text-align: center;
-  }
-
-  .card > img {
-    margin-bottom: .75rem;
-    border-radius: 100px;
-  }
-
-  .card-text {
-    font-size: 85%;
-  }
 </style>

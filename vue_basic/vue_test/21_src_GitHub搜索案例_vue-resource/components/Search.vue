@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import axios from 'axios';
+// import axios from 'axios';
 export default {
   name: 'Search',
   data() {
@@ -19,10 +19,11 @@ export default {
   },
   methods: {
     searchUsers() {
-      // 请求前
+      console.log(this);
+      // 请求中
       this.$bus.$emit('updataListData',{isFirst:false,isLoading:true,msg:'',items:[],noData:false})
       // 这里GitHub后端使用了cors解决了跨域问题，所以直接请求就行了
-      axios.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
+      this.$http.get(`https://api.github.com/search/users?q=${this.keyWord}`).then(
         response => {
           console.log("请求成功了");
           // 请求成功 有两种情况 :数组长度为0，或者不为0
@@ -39,7 +40,6 @@ export default {
           console.log("请求失败了", error.message);
           // 请求错误
           this.$bus.$emit('updataListData',{isLoading:false,msg:error.message,items:[],noData:false})
-
         }
       )
     }
